@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shayko Bot V30 - Login</title>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 400px;
+      width: 90%;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 60px;
+      margin-bottom: 15px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input {
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007aff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #005bbb;
+    }
+
+    .secondary-button {
+      background-color: #28a745;
+    }
+
+    .secondary-button:hover {
+      background-color: #1e7e34;
+    }
+
+    .message {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .support-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .support-buttons a {
+      flex: 1 1 30%;
+      min-width: 100px;
+      max-width: 120px;
+      text-decoration: none;
+    }
+
+    .support-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background-color: #eee;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .support-btn:hover {
+      background-color: #ddd;
+    }
+
+    .material-icons {
+      margin-right: 5px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 400px) {
+      .support-btn {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .material-icons {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="https://cdn-icons-png.flaticon.com/512/3079/3079457.png" class="logo" alt="Logo">
+    <h2>Bot Sistema v15</h2>
+    <p>Seja bem-vindo de volta!</p>
+
+    <input type="email" id="email" placeholder="E-mail">
+    <input type="password" id="password" placeholder="Senha">
+
+    <button onclick="login()">Entrar</button>
+    <button onclick="window.location.href='pagamento.html'" class="secondary-button">Criar Conta</button>
+
+    <div id="loginMessage" class="message"></div>
+
+   <!-- Botões de suporte -->
+    <div class="support-buttons">
+      <a href=https://wa.me/258845577924?text=Olá%2C+gostaria+de+falar+com+você."" target="_blank" class="support-btn" title="WhatsApp">
+        <span class="material-icons">chat</span> WhatsApp
+      </a>
+      <a href="https://www.youtube.com/@admsistema" target="_blank" class="support-btn" title="YouTube">
+        <span class="material-icons">smart_display</span> YouTube
+      </a>
+      <a href=https://www.youtube.com/@admsistema"" target="_blank" class="support-btn" title="Facebook">
+        <span class="material-icons">facebook</span> Facebook
+      </a>
+    </div>
+  </div>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAYahf_6MKX0U_LMNei2WuX38eqAWR6cVw",
+      authDomain: "kira-bot-1-9-0.firebaseapp.com",
+      projectId: "kira-bot-1-9-0",
+      storageBucket: "kira-bot-1-9-0.appspot.com",
+      messagingSenderId: "1053750438733",
+      appId: "1:1053750438733:android:fa0b70a11451048669a504"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const message = document.getElementById('loginMessage');
+      message.textContent = "";
+
+      if (!email || !password) {
+        message.textContent = "Preencha todos os campos.";
+        return;
+      }
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          localStorage.setItem("autenticado", "true");
+          window.location.href = "telabot.html";
+        })
+        .catch(error => {
+          message.textContent = "Erro: " + error.message;
+        });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escolha seu Pacote</title>
+
+<script>
+  if (localStorage.getItem("autenticado") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
+
+  <link rel="stylesheet" href="pagamento.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-shield-alt"></i> Escolha seu Pacote.</h1>
+    <div class="plans">
+      <!-- Pacote Básico -->
+      <div class="card">
+        <h2>Básico</h2>
+        <p class="price">650 MT / 7 dias</p>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Validade de 1 semana</li>
+          <li><i class="fas fa-check-circle"></i> Ideal para iniciantes</li>
+          <li><i class="fas fa-check-circle verificado"></i> 90% de Acertividade</li>
+          <li><i class="fas fa-check-circle"></i> Suporte básico</li>
+        </ul>
+        <a href="https://wa.me/258857681065?text=Olá,+quero+o+Pacote+Básico+de+550MT." class="btn">Escolher</a>
+      </div>
+
+      <!-- Pacote Normal -->
+      <div class="card destaque">
+        <h2>Normal</h2>
+        <p class="price">800 MT / 14 dias</p>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Validade de 2 semanas</li>
+          <li><i class="fas fa-check-circle"></i> Suporte rápido</li>
+          <li><i class="fas fa-check-circle verificado"></i> 95% de Acertividade</li>
+
+          <li><i class="fas fa-check-circle"></i> Benefícios adicionais</li>
+        </ul>
+        <a href="https://wa.me/258857681065?text=Olá,+quero+o+Pacote+Normal+de+800MT." class="btn">Escolher</a>
+      </div>
+
+      <!-- Pacote Premium -->
+      <div class="card premium">
+        <h2>Premium <i class="fas fa-crown"></i></h2>
+        <p class="price">1300 MT / 30 dias</p>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Validade de 30 dias</li>
+          <li><i class="fas fa-check-circle"></i> Suporte prioritário 24h</li>
+          <li><i class="fas fa-check-circle verificado"></i> 99% de Acertividade</li>
+          <li><i class="fas fa-check-circle"></i> Acesso total e bônus</li>
+          <li><i class="fas fa-check-circle verificado"></i> Direito a aulas de como usar.</li> 
+        </ul>
+        <a href="https://wa.me/258857681065?text=Olá,+quero+o+Pacote+Premium+de+1300MT." class="btn">Escolher</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

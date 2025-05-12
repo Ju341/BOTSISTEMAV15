@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shayko Bot V30</title>
+<script>
+  if (localStorage.getItem("autenticado") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-weight: bold;
+    }
+
+    body {
+      background-color: #bdc3c7;
+      font-family: 'Segoe UI', sans-serif;
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      padding: 16px; /* Adicionando espaço nas laterais */
+    }
+
+    .wrapper {
+      background-color: #ecf0f1;
+      padding: 16px;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px; /* Largura menor, não ocupa toda a tela */
+    }
+
+    .header {
+      background-color: #34495e;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: #ecf0f1;
+    }
+
+    .propeller, .plane {
+      font-size: 18px;
+      color: #ecf0f1;
+    }
+
+    .plane { transform: rotate(-90deg); }
+
+    @keyframes rotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .propeller { animation: rotate 1s linear infinite; }
+
+    .status-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      gap: 12px;
+    }
+
+    .status-box {
+      background-color: #ffffff;
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .status-box i {
+      font-size: 22px;
+      margin-bottom: 6px;
+      color: #34495e;
+    }
+
+    .status-box span {
+      font-size: 16px;
+      color: inherit;
+    }
+
+    .webview-container {
+      flex: 1;
+      background-color: #ecf0f1;
+      margin: 16px 0; /* Aumentando o espaço entre os containers */
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px; /* Largura reduzida */
+      height: 400px; /* Aumentando a altura do webview */
+    }
+
+    object {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .bottom-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      color: #2c3e50;
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      width: 100%;
+      max-width: 400px; /* Largura reduzida */
+      position: relative;
+      cursor: pointer;
+    }
+
+    .alert-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .bottom-button i {
+      position: absolute;
+      right: 16px;
+      font-size: 18px;
+    }
+
+    .highlight-roxo { color: #7a0bc0; }
+    .highlight-azul { color: #0057e7; }
+    .highlight-rosa { color: #c60075; }
+
+    .blink-text {
+      animation: blinkText 1s infinite;
+    }
+
+    @keyframes blinkText {
+      0%,100% { opacity:1; }
+      50% { opacity:0; }
+    }
+
+    small {
+      font-size: 13px;
+      color: #e74c3c;
+      margin-top: 4px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="header">
+      <i class="fas fa-fan propeller"></i>
+      <span id="signalText">Gerador de Sinais</span>
+      <i class="fas fa-plane plane"></i>
+    </div>
+
+    <div class="status-container">
+      <div class="status-box">
+        <i class="fas fa-clock"></i>
+        <span id="currentTime">--:--:--</span>
+      </div>
+      <div class="status-box">
+        <i class="fas fa-chart-column"></i>
+        <span id="saida">--%</span>
+      </div>
+      <div class="status-box">
+        <i class="fas fa-stopwatch"></i>
+        <span id="valido">--:--:--</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="webview-container">
+    <object data="https://www.elephantbet.co.mz" type="text/html"></object>
+  </div>
+
+  <div class="bottom-button" id="alertBox" onclick="changeWebviewLink()">
+    <div class="alert-text" id="alertText"></div>
+    <i class="fas fa-sync"></i>
+  </div>
+
+  <script>
+    const links = ["https://www.megagamelive.com.mz/", "https://outrolink.com", "https://maisumlink.com"];
+    let currentLinkIndex = 0;
+
+    function changeWebviewLink() {
+      currentLinkIndex = (currentLinkIndex + 1) % links.length;
+      document.querySelector('object').data = links[currentLinkIndex];
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('currentTime').textContent = now.toLocaleTimeString('pt-BR');
+      if (nextSignalTime && now >= nextSignalTime) {
+        generateSignal();
+      }
+    }
+
+    function flashSignalText(texto, risco, classe) {
+      const alertText = document.getElementById('alertText');
+      alertText.className = `alert-text blink-text ${classe}`;
+      alertText.innerHTML = `${texto}<small>${risco}</small>`;
+      setTimeout(() => {
+        const small = alertText.querySelector('small');
+        if (small) small.remove();
+        alertText.classList.remove('blink-text');
+      }, 5000);
+    }
+
+    function randomBetween(min, max) { return Math.random() * (max - min) + min; }
+
+    let nextSignalTime = null;
+
+    function scheduleNextSignal() {
+      const now = new Date();
+      const offsetSec = Math.floor(randomBetween(30, 60));
+      nextSignalTime = new Date(now.getTime() + offsetSec * 1000);
+      document.getElementById('valido').textContent = nextSignalTime.toLocaleTimeString('pt-BR');
+    }
+
+    function generateSignal() {
+      const rand = Math.random();
+      const signalText = document.getElementById('signalText');
+      const saidaEl = document.getElementById('saida');
+      let texto, risco, classe;
+
+      if (rand <= 0.5) {
+        classe = 'highlight-roxo';
+        texto = `SAIA NO ${randomBetween(2, 4.99).toFixed(2)}x`;
+        risco = 'Entrada moderada.';
+        signalText.innerHTML = `<span class="${classe}">POSSÍVEL ROXO</span>`;
+      } else if (rand <= 0.85) {
+        classe = 'highlight-azul';
+        texto = `SAIA NO ${randomBetween(1.2, 1.99).toFixed(2)}x`;
+        risco = 'Risco elevado.';
+        signalText.innerHTML = `<span class="${classe}">POSSÍVEL AZUL</span>`;
+      } else {
+        classe = 'highlight-rosa';
+        texto = `SAIA NO ${randomBetween(6, 10).toFixed(2)}x`;
+        risco = 'Alto risco.';
+        signalText.innerHTML = `<span class="${classe}">POSSÍVEL ROSA</span>`;
+      }
+
+      saidaEl.textContent = `${Math.floor(randomBetween(85, 100))}%`;
+      saidaEl.className = classe;
+      flashSignalText(texto, risco, classe);
+      scheduleNextSignal();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    generateSignal();
+  </script>
+
+</body>
+</html>
